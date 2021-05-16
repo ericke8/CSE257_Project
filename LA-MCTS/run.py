@@ -42,7 +42,7 @@ elif args.func == 'lunar_cont':
 elif args.func == 'walker':
     f = Walker()
 elif args.func == 'schwefel':
-    f = Schwefel()
+    f = Schwefel(dims =args.dims)
 else:
     print('function not defined')
     os._exit(1)

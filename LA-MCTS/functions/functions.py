@@ -17,25 +17,27 @@ class tracker:
         self.results   = []
         self.curt_best = float("inf")
         self.foldername = foldername
-        try:
-            os.mkdir(foldername)
-        except OSError:
-            print ("Creation of the directory %s failed" % foldername)
-        else:
-            print ("Successfully created the directory %s " % foldername)
+        # try:
+        #     os.mkdir(foldername)
+        # except OSError:
+        #     print ("Creation of the directory %s failed" % foldername)
+        # else:
+        #     print ("Successfully created the directory %s " % foldername)
         
     def dump_trace(self):
-        trace_path = self.foldername + '/result' + str(len( self.results) )
-        final_results_str = json.dumps(self.results)
-        with open(trace_path, "a") as f:
-            f.write(final_results_str[1:-1] + '\n')
+        pass
+        # trace_path = self.foldername + '/result' + str(len( self.results) )
+        # final_results_str = json.dumps(self.results)
+        # with open(trace_path, "a") as f:
+        #     f.write(final_results_str[1:-1] + '\n')
             
     def track(self, result):
-        if result < self.curt_best:
-            self.curt_best = result
-        self.results.append(self.curt_best)
-        if len(self.results) % 100 == 0:
-            self.dump_trace()
+        pass
+        # if result < self.curt_best:
+        #     self.curt_best = result
+        # self.results.append(self.curt_best)
+        # if len(self.results) % 100 == 0:
+        #     self.dump_trace()
 
 class Levy:
     def __init__(self, dims=10):
@@ -47,7 +49,7 @@ class Levy:
         #tunable hyper-parameters in LA-MCTS
         self.Cp          = 10
         self.leaf_size   = 8
-        self.kernel_type = "poly"
+        self.kernel_type = "rbf"
         self.ninits      = 40
         self.gamma_type   = "auto"
         print("initialize levy at dims:", self.dims)

@@ -179,7 +179,11 @@ class Node:
         return good_kid_data, bad_kid_data
 
     def plot_samples_and_boundary(self, func):
-        name = self.get_name() + ".pdf"
+        name = self.get_name() + ".png"
+        self.classifier.plot_samples_and_boundary(func, name)
+        
+    def plot_samples_and_boundary_iter(self, func, iter):
+        name = f"iter{iter}_" + self.get_name() + ".png"
         self.classifier.plot_samples_and_boundary(func, name)
 
     def sample_arch(self):

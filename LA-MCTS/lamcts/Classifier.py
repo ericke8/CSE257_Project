@@ -90,7 +90,15 @@ class Classifier():
         pred_labels = pred_labels.reshape( xv.shape )
         
         fig, ax = plt.subplots()
-        ax.contour(xv, yv, true_y.reshape(xv.shape), cmap=cm.coolwarm)
+        
+        func_name = func.__class__.__name__ 
+        if func_name == "Ackley":
+            ax.plot(0, 0, 'ro', markersize=3)
+        elif func_name == 'Levy':
+            ax.plot(1, 1, 'ro', markersize=3)
+        elif func_name == 'Schwefel':
+            ax.plot(420.9687, 420.9687, 'ro', markersize=3)
+        # ax.contour(xv, yv, true_y.reshape(xv.shape), cmap=cm.coolwarm)
         ax.contourf(xv, yv, pred_labels, alpha=0.4)
         
         ax.scatter(self.X[ np.where(plabels == 0) , 0 ], self.X[ np.where(plabels == 0) , 1 ], marker='x', label="good-"+str(np.round(good_mean, 2))+"-"+str(good_counts) )
@@ -98,8 +106,8 @@ class Classifier():
         ax.legend(loc="best")
         ax.set_xlabel('x1')
         ax.set_ylabel('x2')
-        ax.set_xlim([-10, 10])
-        ax.set_ylim([-10, 10])
+        ax.set_xlim([lb[0], ub[0]])
+        ax.set_ylim([lb[1], ub[1]])
         plt.savefig(name)
         plt.close()
     
