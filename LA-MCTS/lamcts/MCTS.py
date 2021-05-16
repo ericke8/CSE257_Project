@@ -22,6 +22,8 @@ from .utils import latin_hypercube, from_unit_cube
 from torch.quasirandom import SobolEngine
 import torch
 
+import csv
+
 class MCTS:
     #############################################
 
@@ -45,6 +47,9 @@ class MCTS:
         self.gamma_type              =  gamma_type
         
         self.solver_type             = solver #solver can be 'bo' or 'turbo'
+        
+        self.filepath = f'{func.__class__.__name__}_{dims}_results.csv'
+        self.save_interval = 50
         
         print("gamma_type:", gamma_type)
         
@@ -231,6 +236,7 @@ class MCTS:
             curt_node       = curt_node.parent
 
     def search(self, iterations):
+        best_vals = []
         for idx in range(self.sample_counter, iterations):
             print("")
             print("="*10)
@@ -255,9 +261,27 @@ class MCTS:
                     
                     self.backpropogate( leaf, value )
             print("total samples:", len(self.samples) )
-            print("current best f(x):", np.absolute(self.curt_best_value) )
+            
+            cur_best_val = np.absolute(self.curt_best_value)
+            print("current best f(x):",  cur_best_val)
+            best_vals.append(cur_best_val)
+            
+            if len(best_vals) % self.save_interval == 0:
+                segment = best_vals[-self.save_interval:]
+                with open(self.filepath, 'a') as f:
+                    f.write(f'{json.dumps(segment)[1:-1]}')
+                    if self.ninits + len(best_vals) < iterations:
+                        f.write(', ')
+            
             # print("current best x:", np.around(self.curt_best_sample, decimals=1) )
             print("current best x:", self.curt_best_sample.tolist())
+        
+        with open(self.filepath, 'a') as f:
+            remainder = len(best_vals) % self.save_interval
+            if remainder != 0:
+                segment = best_vals[-remainder:]
+                f.write(f'{json.dumps(segment)[1:-1]}')
+            f.write('\n')
 
 
 
