@@ -101,3 +101,24 @@ class Ackley:
         self.tracker.track( result, x )
                 
         return result   
+    
+
+class Schwefel:
+    def __init__(self, dims=10):
+        self.dims      = dims
+        self.lb        = -500 * np.ones(dims)
+        self.ub        =  500 * np.ones(dims)
+        self.counter   = 0
+        self.tracker   = tracker('Schwefel'+str(dims) )
+        
+
+    def __call__(self, x):
+        x = np.array(x)
+        self.counter += 1
+        assert len(x) == self.dims
+        assert x.ndim == 1
+        result = np.sum(-x * np.sin(np.sqrt(np.abs(x)))) + 418.9829*x.size
+        
+        self.tracker.track( result, x )
+                
+        return result   
