@@ -33,6 +33,14 @@ elif args.func == 'swimmer':
     f = Swimmer()
 elif args.func == 'hopper':
     f = Hopper()
+elif args.func == 'reacher':
+    f = Reacher()
+elif args.func == 'lunar_cont':
+    f = LunarlandingCont()
+elif args.func == 'walker':
+    f = Walker()
+elif args.func == 'schwefel':
+    f = Schwefel()
 else:
     print('function not defined')
     os._exit(1)
@@ -56,7 +64,8 @@ agent = MCTS(
              Cp = f.Cp,              # Cp for MCTS
              leaf_size = f.leaf_size, # tree leaf size
              kernel_type = f.kernel_type, #SVM configruation
-             gamma_type = f.gamma_type    #SVM configruation
+             gamma_type = f.gamma_type,   #SVM configruation
+             solver = 'bo'
              )
 
 agent.search(iterations = args.iterations)
