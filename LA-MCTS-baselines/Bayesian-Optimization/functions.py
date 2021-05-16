@@ -115,12 +115,13 @@ class Schwefel:
         
         
     def __call__(self, x):
+        x = np.array(x)
         self.counter += 1
         assert len(x) == self.dims
         assert x.ndim == 1
-        assert np.all(x <= self.ub) and np.all(x >= self.lb)
         result = np.sum(-x * np.sin(np.sqrt(np.abs(x)))) + 418.9829*x.size
-        self.tracker.track( result )
-                
+        
+        self.tracker.track( result, x )
+                        
         return result
     

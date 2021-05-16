@@ -4,4 +4,8 @@ __pycache__
 *.csv
 *.pdf
 
-*/Ackley10
+**/Ackley10/
+**/Levy10/
+**/Schwefel10/
+
+*.log

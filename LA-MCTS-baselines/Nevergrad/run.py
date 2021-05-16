@@ -28,6 +28,8 @@ if args.func == 'ackley':
     f = Ackley(dims =args.dims)
 elif args.func == 'levy':
     f = Levy(dims = args.dims)
+elif args.func == 'schwefel':
+    f = Schwefel(dims = args.dims)
 else:
     print('function not defined')
     os._exit(1)
