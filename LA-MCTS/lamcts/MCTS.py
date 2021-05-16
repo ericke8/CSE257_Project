@@ -48,7 +48,7 @@ class MCTS:
         
         self.solver_type             = solver #solver can be 'bo' or 'turbo'
         
-        self.filepath = f'{func.__class__.__name__}_{dims}_results.csv'
+        self.filepath = f'{func.__class__.__name__}_{dims}_{solver}_results.csv'
         self.save_interval = 50
         
         print("gamma_type:", gamma_type)

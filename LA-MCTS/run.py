@@ -6,6 +6,7 @@
 from functions.functions import *
 from functions.mujoco_functions import *
 from lamcts import MCTS
+import os
 import argparse
 
 
@@ -15,6 +16,7 @@ parser = argparse.ArgumentParser(description='Process inputs')
 parser.add_argument('--func', help='specify the test function')
 parser.add_argument('--dims', type=int, help='specify the problem dimensions')
 parser.add_argument('--iterations', type=int, help='specify the iterations to collect in the search')
+parser.add_argument('--solver', default='bo', help='specify the solver to use (default: bo)')
 
 
 args = parser.parse_args()
@@ -45,6 +47,15 @@ else:
     print('function not defined')
     os._exit(1)
 
+
+if args.solver == 'turbo':
+    solver = 'turbo'
+elif args.solver == 'bo':
+    solver = 'bo'
+else:
+    print('invalid solver')
+    os._exit(1)
+
 assert f is not None
 assert args.iterations > 0
 
@@ -65,7 +76,7 @@ agent = MCTS(
              leaf_size = f.leaf_size, # tree leaf size
              kernel_type = f.kernel_type, #SVM configruation
              gamma_type = f.gamma_type,   #SVM configruation
-             solver = 'bo'
+             solver = solver
              )
 
 agent.search(iterations = args.iterations)
