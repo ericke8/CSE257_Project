@@ -25,7 +25,7 @@ import torch
 class MCTS:
     #############################################
 
-    def __init__(self, lb, ub, dims, ninits, func, Cp = 1, leaf_size = 20, kernel_type = "rbf", gamma_type = "auto"):
+    def __init__(self, lb, ub, dims, ninits, func, Cp = 1, leaf_size = 20, kernel_type = "rbf", gamma_type = "auto", solver='bo'):
         self.dims                    =  dims
         self.samples                 =  []
         self.nodes                   =  []
@@ -44,7 +44,7 @@ class MCTS:
         self.kernel_type             =  kernel_type
         self.gamma_type              =  gamma_type
         
-        self.solver_type             = 'bo' #solver can be 'bo' or 'turbo'
+        self.solver_type             = solver #solver can be 'bo' or 'turbo'
         
         print("gamma_type:", gamma_type)
         
@@ -257,7 +257,7 @@ class MCTS:
             print("total samples:", len(self.samples) )
             print("current best f(x):", np.absolute(self.curt_best_value) )
             # print("current best x:", np.around(self.curt_best_sample, decimals=1) )
-            print("current best x:", self.curt_best_sample )
+            print("current best x:", self.curt_best_sample.tolist())
 
 
 
