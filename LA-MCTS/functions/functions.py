@@ -28,7 +28,7 @@ class tracker:
         trace_path = self.foldername + '/result' + str(len( self.results) )
         final_results_str = json.dumps(self.results)
         with open(trace_path, "a") as f:
-            f.write(final_results_str + '\n')
+            f.write(final_results_str[1:-1] + '\n')
             
     def track(self, result):
         if result < self.curt_best:
