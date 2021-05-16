@@ -1,3 +1,8 @@
+# CSE 257 Project Report
+Code is from the following paper, with revisions:
+<a href="https://arxiv.org/abs/2007.00708">Learning Search Space Partition for Black-box Optimization using Monte Carlo Tree Search</a> </br>
+
+
 <p align="center">
 <img src='https://github.com/linnanwang/paper-image-repo/blob/master/LA-MCTS/logo.png?raw=true' width="600">
 </p>
