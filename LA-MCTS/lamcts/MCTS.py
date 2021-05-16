@@ -211,11 +211,13 @@ class MCTS:
         print("")
         return curt_node, path
 
-    def select(self):
+    def select(self, iter = None):
         self.reset_to_root()
         curt_node = self.ROOT
         path      = [ ]
         
+        if self.visualization == True:
+            curt_node.plot_samples_and_boundary_iter(self.func, iter)
         while curt_node.is_leaf() == False:
             UCT = []
             for i in curt_node.kids:
@@ -223,6 +225,8 @@ class MCTS:
             choice = np.random.choice(np.argwhere(UCT == np.amax(UCT)).reshape(-1), 1)[0]
             path.append( (curt_node, choice) )
             curt_node = curt_node.kids[choice]
+            if curt_node.is_leaf() == False and self.visualization == True:
+                curt_node.plot_samples_and_boundary_iter(self.func, iter)
             print("=>", curt_node.get_name(), end=' ' )
         print("")
         return curt_node, path
@@ -237,13 +241,14 @@ class MCTS:
 
     def search(self, iterations):
         best_vals = []
+        iter = 0
         for idx in range(self.sample_counter, iterations):
             print("")
             print("="*10)
             print("iteration:", idx)
             print("="*10)
             self.dynamic_treeify()
-            leaf, path = self.select()
+            leaf, path = self.select(iter)
             for i in range(0, 1):
                 if self.solver_type == 'bo':
                     samples = leaf.propose_samples_bo( 1, path, self.lb, self.ub, self.samples )
@@ -275,6 +280,7 @@ class MCTS:
             
             # print("current best x:", np.around(self.curt_best_sample, decimals=1) )
             print("current best x:", self.curt_best_sample.tolist())
+            iter += 1
         
         with open(self.filepath, 'a') as f:
             remainder = len(best_vals) % self.save_interval
