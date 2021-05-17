@@ -1,6 +1,7 @@
 import pandas as pd
 
-path = 'Ackley_10_results.csv'
+path = 'Ackley_10_bo_results.csv'
     
 df = pd.read_csv(path, header=None)
-print(df)
+print(len(df))
+print(df.head())

@@ -5,6 +5,7 @@
 # 
 from functions.functions import *
 from functions.mujoco_functions import *
+from functions.pybullet_functions import *
 from lamcts import MCTS
 import os
 import argparse
@@ -35,12 +36,30 @@ elif args.func == 'swimmer':
     f = Swimmer()
 elif args.func == 'hopper':
     f = Hopper()
+#######################################
+## Pybullet ##
+elif args.func == 'minitaur':
+    f = Minitaur()
+elif args.func == 'kuka':
+    f = Kuka()
+elif args.func == 'thrower':
+    f = Thrower()
+elif args.func == 'pusher':
+    f = Pusher()
+elif args.func == 'flagrun':
+    f = FlagRun()
+
+## Mujoco ##
 elif args.func == 'reacher':
     f = Reacher()
+    
+## Box2d ##
 elif args.func == 'lunar_cont':
     f = LunarlandingCont()
 elif args.func == 'walker':
     f = Walker()
+    
+## Synthetic ##
 elif args.func == 'schwefel':
     f = Schwefel(dims =args.dims)
 else:
