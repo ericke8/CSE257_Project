@@ -270,7 +270,7 @@ class FlagRun:
         self.leaf_size    = 100
         self.kernel_type  = "linear"
         self.gamma_type   = "scale"
-        self.ninits       = 10
+        self.ninits       = 150
         
         print("===========initialization===========")
         print("mean:", self.mean)
