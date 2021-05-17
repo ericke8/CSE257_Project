@@ -1,8 +1,14 @@
 import numpy as np
 import gym
 from gym.wrappers import FilterObservation, FlattenObservation
+import pybullet_envs
 
-env = gym.make('CarRacing-v0')
+env = gym.make('HumanoidFlagrunBulletEnv-v0')
+# env = gym.make('Hopper-v2')
+
+
+env.render()
+
 # env = FlattenObservation(FilterObservation(env, ['observation', 'desired_goal']))
 obs = env.reset()
 
