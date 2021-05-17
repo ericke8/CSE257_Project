@@ -24,8 +24,8 @@ class Minitaur:
         self.Cp           = 10
         self.leaf_size    = 100
         self.kernel_type  = "linear"
-        self.gamma_type   = "auto"
-        self.ninits       = 150
+        self.gamma_type   = "scale"
+        self.ninits       = 30
         
         print("===========initialization===========")
         print("mean:", self.mean)
@@ -87,7 +87,7 @@ class Kuka:
         self.leaf_size    = 100
         self.kernel_type  = "linear"
         self.gamma_type   = "scale"
-        self.ninits       = 150
+        self.ninits       = 30
         
         print("===========initialization===========")
         print("mean:", self.mean)
@@ -148,7 +148,7 @@ class Thrower:
         self.leaf_size    = 100
         self.kernel_type  = "linear"
         self.gamma_type   = "scale"
-        self.ninits       = 150
+        self.ninits       = 30
         
         print("===========initialization===========")
         print("mean:", self.mean)
@@ -209,7 +209,7 @@ class Pusher:
         self.leaf_size    = 100
         self.kernel_type  = "linear"
         self.gamma_type   = "scale"
-        self.ninits       = 150
+        self.ninits       = 30
         
         print("===========initialization===========")
         print("mean:", self.mean)
@@ -270,7 +270,7 @@ class FlagRun:
         self.leaf_size    = 100
         self.kernel_type  = "linear"
         self.gamma_type   = "scale"
-        self.ninits       = 150
+        self.ninits       = 30
         
         print("===========initialization===========")
         print("mean:", self.mean)
