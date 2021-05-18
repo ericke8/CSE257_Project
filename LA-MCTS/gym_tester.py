@@ -2,8 +2,11 @@ import numpy as np
 import gym
 from gym.wrappers import FilterObservation, FlattenObservation
 import pybullet_envs
+import highway_env
+import gym_maze
+from gym_minigrid.wrappers import *
 
-env = gym.make('HumanoidFlagrunBulletEnv-v0')
+env = gym.make('MiniGrid-Empty-Random-5x5-v0')
 # env = gym.make('Hopper-v2')
 
 
@@ -37,6 +40,7 @@ for i in range(2000):
     env.render()
     action = policy()
     obs, reward, done, info = env.step(action)
+    # print(obs)
 
     # If we want, we can substitute a goal here and re-compute
     # the reward. For instance, we can just pretend that the desired

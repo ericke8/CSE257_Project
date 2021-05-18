@@ -9,7 +9,7 @@ class Minitaur:
     
     def __init__(self):
         self.mean    = 0
-        self.std     = 0
+        self.std     = 1
                 
         self.dims    = 224
         self.lb      = -1 * np.ones(self.dims)

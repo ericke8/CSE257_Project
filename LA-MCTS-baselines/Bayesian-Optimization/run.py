@@ -26,6 +26,8 @@ elif args.func == 'levy':
     f = Levy(dims = args.dims)
 elif args.func == 'schwefel':
     f = Schwefel(dims = args.dims)
+elif args.func == 'easom':
+    f = Easom()
 else:
     print('function not defined')
     os._exit(1)

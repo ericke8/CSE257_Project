@@ -205,6 +205,33 @@ class Schwefel:
                 
         return result
 
+class Easom:
+    def __init__(self):
+        dims = 2
+        self.dims      = dims
+        self.lb        = -100 * np.ones(dims)
+        self.ub        =  100 * np.ones(dims)
+        self.counter   = 0
+        self.tracker   = tracker('Easom'+str(dims) )
+        
+        #tunable hyper-parameters in LA-MCTS
+        self.Cp        = 100
+        self.leaf_size = 10
+        self.ninits    = 40
+        self.kernel_type = "rbf"
+        self.gamma_type  = "auto"
+        
+        
+    def __call__(self, x):
+        self.counter += 1
+        assert len(x) == self.dims
+        assert x.ndim == 1
+        assert np.all(x <= self.ub) and np.all(x >= self.lb)
+        
+        result = -np.cos(x[0]) * np.cos(x[1]) * np.exp(-(x[0] - np.pi)**2 - (x[1] - np.pi)**2)
+        self.tracker.track( result )
+                
+        return result
 
 class LunarlandingCont:
     def __init__(self):
