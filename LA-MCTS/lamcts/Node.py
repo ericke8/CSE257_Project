@@ -43,7 +43,7 @@ class Node:
         assert len(self.kids) == 0
         self.kids.append( good_kid )
         self.kids.append( bad_kid )
-        assert self.kids[0].classifier.get_mean() > self.kids[1].classifier.get_mean()
+        # assert self.kids[0].classifier.get_mean() > self.kids[1].classifier.get_mean()
         
     def is_good_kid(self):
         if self.parent is not None:

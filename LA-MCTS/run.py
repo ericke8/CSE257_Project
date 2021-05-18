@@ -6,6 +6,7 @@
 from functions.functions import *
 from functions.mujoco_functions import *
 from functions.pybullet_functions import *
+from functions.game_functions import *
 from lamcts import MCTS
 import os
 import argparse
@@ -37,6 +38,15 @@ elif args.func == 'swimmer':
 elif args.func == 'hopper':
     f = Hopper()
 #######################################
+
+## Other ##
+elif args.func == 'highway':
+    f = Highway()
+elif args.func == 'goddard':
+    f = Goddard()
+elif args.func == 'maze':
+    f = Maze()
+
 ## Pybullet ##
 elif args.func == 'minitaur':
     f = Minitaur()
@@ -62,6 +72,9 @@ elif args.func == 'walker':
 ## Synthetic ##
 elif args.func == 'schwefel':
     f = Schwefel(dims =args.dims)
+elif args.func == 'easom':
+    f = Easom()
+#######################################
 else:
     print('function not defined')
     os._exit(1)
