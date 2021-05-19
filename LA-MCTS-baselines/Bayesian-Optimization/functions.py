@@ -7,6 +7,10 @@ import numpy as np
 import gym
 import json
 import os
+import highway_env
+from gym_minigrid.wrappers import *
+import pybullet_envs
+
 
 
 class tracker:
@@ -38,7 +42,7 @@ class tracker:
         print("iteration:", self.counter, "total samples:", len(self.results) )
         print("="*10)
         print("current best f(x):", self.curt_best)
-        print("current best x:", np.around(self.curt_best_x, decimals=1))
+        print("current best x:", np.around(self.curt_best_x, decimals=1).tolist())
         self.results.append(self.curt_best)
         self.counter += 1
         if len(self.results) % 100 == 0:
@@ -144,4 +148,242 @@ class Easom:
         result = -np.cos(x[0]) * np.cos(x[1]) * np.exp(-(x[0] - np.pi)**2 - (x[1] - np.pi)**2)
         self.tracker.track( result, x )
                 
+        return result
+    
+    
+class Highway:
+    
+    def __init__(self):
+        self.mean    = 0
+        self.std     = 1
+                
+        self.dims    = 25
+        self.lb      = -1 * np.ones(self.dims)
+        self.ub      =  1 * np.ones(self.dims)
+        self.counter = 0
+        self.env     = gym.make('highway-v0')
+        self.num_rollouts = 3
+        self.render  = False
+        self.policy_shape = (5, 5)
+        self.tracker   = tracker('Highway'+str(self.dims) )
+        
+        print("===========initialization===========")
+        print("mean:", self.mean)
+        print("std:", self.std)
+        print("dims:", self.dims)
+        print("policy:", self.policy_shape )
+            
+    def __call__(self, x):
+        x = np.array(x)
+        self.counter += 1
+        assert len(x) == self.dims
+        assert x.ndim == 1
+        assert np.all(x <= self.ub) and np.all(x >= self.lb)
+        
+        M = x.reshape(self.policy_shape)
+        
+        returns = []
+        observations = []
+        actions = []
+        
+        for i in range(self.num_rollouts):
+            obs    = self.env.reset()
+            done   = False
+            totalr = 0.
+            steps  = 0
+            while not done:
+                # M      = self.policy
+                inputs = (obs - self.mean)/self.std
+                
+                action = np.argmax(np.sum(np.dot(M, inputs), axis=0))
+                observations.append(obs)
+                actions.append(action)
+                obs, r, done, _ = self.env.step(action)
+                totalr += r
+                steps  += 1
+                if self.render:
+                    self.env.render()
+            returns.append(totalr)
+            
+        result = np.mean(returns)*-1
+        self.tracker.track( result, x )
+        return result
+    
+class Swimmer:
+    
+    def __init__(self):
+        self.policy_shape = (2, 8)
+        self.mean         = 0
+        self.std          = 1
+        self.dims         = 16
+        self.lb           = -1 * np.ones(self.dims)
+        self.ub           =  1 * np.ones(self.dims)
+        self.counter      = 0
+        self.env          = gym.make('Swimmer-v2')
+        self.num_rollouts = 3
+        self.tracker   = tracker('Swimmer'+str(self.dims) )
+        
+        
+        print("===========initialization===========")
+        print("mean:", self.mean)
+        print("std:", self.std)
+        print("dims:", self.dims)
+        print("policy:", self.policy_shape )
+        
+        self.render = False
+        
+    
+    def __call__(self, x):
+        x = np.array(x)
+        self.counter += 1
+        assert len(x) == self.dims
+        assert x.ndim == 1
+        assert np.all(x <= self.ub) and np.all(x >= self.lb)
+        
+        M = x.reshape(self.policy_shape)
+        
+        returns = []
+        observations = []
+        actions = []
+        
+        
+        for i in range(self.num_rollouts):
+            obs    = self.env.reset()
+            done   = False
+            totalr = 0.
+            steps  = 0
+            
+            while not done:
+                
+                action = np.dot(M, (obs - self.mean)/self.std)
+                observations.append(obs)
+                actions.append(action)
+                obs, r, done, _ = self.env.step(action)
+                totalr += r
+                steps += 1                
+                if self.render:
+                    self.env.render()            
+            returns.append(totalr)
+            
+        result = np.mean(returns)*-1
+        self.tracker.track( result, x )
+        return result
+    
+    
+class MiniGrid:
+    
+    def __init__(self):
+        self.mean    = 0
+        self.std     = 1
+                
+        self.dims    = 21
+        self.lb      = -1 * np.ones(self.dims)
+        self.ub      =  1 * np.ones(self.dims)
+        self.counter = 0
+        self.env     = ImgObsWrapper(StateBonus(gym.make('MiniGrid-Empty-5x5-v0')))
+        self.num_rollouts = 3
+        self.render  = False
+        self.policy_shape = (7, 3)
+        self.tracker   = tracker('MiniGrid'+str(self.dims) )
+        
+        print("===========initialization===========")
+        print("mean:", self.mean)
+        print("std:", self.std)
+        print("dims:", self.dims)
+        print("policy:", self.policy_shape )
+            
+    def __call__(self, x):
+        x = np.array(x)
+        self.counter += 1
+        assert len(x) == self.dims
+        assert x.ndim == 1
+        assert np.all(x <= self.ub) and np.all(x >= self.lb)
+        
+        M = x.reshape(self.policy_shape)
+        
+        returns = []
+        observations = []
+        actions = []
+        
+        for i in range(self.num_rollouts):
+            obs    = self.env.reset()
+            done   = False
+            totalr = 0.
+            steps  = 0
+            while not done:
+                # M      = self.policy
+                inputs = (obs - self.mean)/self.std
+                inputs = inputs.transpose(2,0,1).reshape(3,-1)
+                
+                action = np.argmax(np.sum(np.dot(M, inputs), axis=1))
+                observations.append(obs)
+                actions.append(action)
+                obs, r, done, _ = self.env.step(action)
+                totalr += r
+                steps  += 1
+                if self.render:
+                    self.env.render()
+            returns.append(totalr)
+            
+        result = np.mean(returns)*-1
+        self.tracker.track( result, x )
+        return result
+
+class RaceCar:
+    
+    def __init__(self):
+        self.mean    = 0
+        self.std     = 1
+                
+        self.dims    = 4
+        self.lb      = -1 * np.ones(self.dims)
+        self.ub      =  1 * np.ones(self.dims)
+        self.counter = 0
+        self.env     = gym.make('RacecarBulletEnv-v0')
+        self.num_rollouts = 3
+        self.render  = False
+        self.policy_shape = (2, 2)
+        self.tracker   = tracker('RaceCar'+str(self.dims) )
+        
+        
+        print("===========initialization===========")
+        print("mean:", self.mean)
+        print("std:", self.std)
+        print("dims:", self.dims)
+        print("policy:", self.policy_shape )
+            
+    def __call__(self, x):
+        x = np.array(x)
+        self.counter += 1
+        assert len(x) == self.dims
+        assert x.ndim == 1
+        assert np.all(x <= self.ub) and np.all(x >= self.lb)
+        
+        M = x.reshape(self.policy_shape)
+        
+        returns = []
+        observations = []
+        actions = []
+        
+        for i in range(self.num_rollouts):
+            obs    = self.env.reset()
+            done   = False
+            totalr = 0.
+            steps  = 0
+            while not done:
+                # M      = self.policy
+                inputs = (obs - self.mean)/self.std
+                
+                action = np.dot(M, inputs)
+                observations.append(obs)
+                actions.append(action)
+                obs, r, done, _ = self.env.step(action)
+                totalr += r
+                steps  += 1
+                if self.render:
+                    self.env.render()
+            returns.append(totalr)
+            
+        result = np.mean(returns)*-1
+        self.tracker.track( result, x )
         return result

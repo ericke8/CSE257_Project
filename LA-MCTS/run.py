@@ -46,6 +46,8 @@ elif args.func == 'goddard':
     f = Goddard()
 elif args.func == 'maze':
     f = Maze()
+elif args.func == 'minigrid':
+    f = MiniGrid()
 
 ## Pybullet ##
 elif args.func == 'minitaur':
@@ -58,6 +60,8 @@ elif args.func == 'pusher':
     f = Pusher()
 elif args.func == 'flagrun':
     f = FlagRun()
+elif args.func == 'racecar':
+    f = RaceCar()
 
 ## Mujoco ##
 elif args.func == 'reacher':

@@ -28,6 +28,14 @@ elif args.func == 'schwefel':
     f = Schwefel(dims = args.dims)
 elif args.func == 'easom':
     f = Easom()
+elif args.func =='highway':
+    f = Highway()
+elif args.func =='swimmer':
+    f = Swimmer()
+elif args.func == 'minigrid':
+    f = MiniGrid()
+elif args.func == 'racecar':
+    f = RaceCar()
 else:
     print('function not defined')
     os._exit(1)
