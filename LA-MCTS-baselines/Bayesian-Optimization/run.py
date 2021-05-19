@@ -36,6 +36,8 @@ elif args.func == 'minigrid':
     f = MiniGrid()
 elif args.func == 'racecar':
     f = RaceCar()
+elif args.func == 'pusher':
+    f = Pusher()
 else:
     print('function not defined')
     os._exit(1)

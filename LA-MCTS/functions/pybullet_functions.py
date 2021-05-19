@@ -84,8 +84,8 @@ class Kuka:
         
         #tunable hyper-parameters in LA-MCTS
         self.Cp           = 10
-        self.leaf_size    = 100
-        self.kernel_type  = "linear"
+        self.leaf_size    = 30
+        self.kernel_type  = "rbf"
         self.gamma_type   = "scale"
         self.ninits       = 30
         
@@ -206,7 +206,7 @@ class Pusher:
         
         #tunable hyper-parameters in LA-MCTS
         self.Cp           = 10
-        self.leaf_size    = 100
+        self.leaf_size    = 50
         self.kernel_type  = "linear"
         self.gamma_type   = "scale"
         self.ninits       = 30
