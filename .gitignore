@@ -1,6 +1,8 @@
 
 .vscode/
 __pycache__
+.ipynb_checkpoints
+
 *.csv
 *.pdf
 *.png
@@ -9,5 +11,9 @@ __pycache__
 **/Levy**/
 **/Schwefel**/
 **/Easom**/
+**/Highway**/
+**/MiniGrid**/
+**/Swimmer**/
+**/RaceCar**/
 
 *.log

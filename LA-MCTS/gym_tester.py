@@ -6,7 +6,8 @@ import highway_env
 import gym_maze
 from gym_minigrid.wrappers import *
 
-env = gym.make('MiniGrid-Empty-Random-5x5-v0')
+env = gym.make('RacecarBulletEnv-v0')
+
 # env = gym.make('Hopper-v2')
 
 
@@ -30,7 +31,7 @@ print(obs.shape)
 
 done = False
 
-def policy():
+def policy(obs):
     # Here you would implement your smarter policy. In this case,
     # we just sample random actions.
     return env.action_space.sample()
@@ -38,7 +39,8 @@ def policy():
     
 for i in range(2000):
     env.render()
-    action = policy()
+    action = policy(obs)
+    # print(action)
     obs, reward, done, info = env.step(action)
     # print(obs)
 
