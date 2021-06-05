@@ -119,11 +119,18 @@ class MCTS:
                 bad_kid  = Node(parent = parent, dims = self.dims, reset_id = False, kernel_type = self.kernel_type, gamma_type = self.gamma_type )
                 good_kid.update_bag( good_kid_data )
                 bad_kid.update_bag(  bad_kid_data  )
+                
+                if bad_kid.classifier.get_mean() > good_kid.classifier.get_mean():
+                    parent.update_kids( good_kid = bad_kid, bad_kid = good_kid )
+                    self.nodes.append(bad_kid)
+                    self.nodes.append(good_kid)
+                else:
+                    parent.update_kids( good_kid = good_kid, bad_kid = bad_kid )
+                    self.nodes.append(good_kid)
+                    self.nodes.append(bad_kid)
+                
             
-                parent.update_kids( good_kid = good_kid, bad_kid = bad_kid )
-            
-                self.nodes.append(good_kid)
-                self.nodes.append(bad_kid)
+                
                 
             #print("continue split:", self.is_splitable())
         

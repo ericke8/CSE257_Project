@@ -215,11 +215,11 @@ class Easom:
         self.tracker   = tracker('Easom'+str(dims) )
         
         #tunable hyper-parameters in LA-MCTS
-        self.Cp        = 100
+        self.Cp        = 50
         self.leaf_size = 10
         self.ninits    = 40
         self.kernel_type = "rbf"
-        self.gamma_type  = "auto"
+        self.gamma_type  = "scale"
         
         
     def __call__(self, x):

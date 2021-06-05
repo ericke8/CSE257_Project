@@ -38,6 +38,12 @@ elif args.func == 'racecar':
     f = RaceCar()
 elif args.func == 'pusher':
     f = Pusher()
+elif args.func == 'kuka':
+    f = Kuka()
+elif args.func == 'minigrid2':
+    f = MiniGrid2()
+elif args.func == 'minigridkey':
+    f = MiniGridKey()
 else:
     print('function not defined')
     os._exit(1)
