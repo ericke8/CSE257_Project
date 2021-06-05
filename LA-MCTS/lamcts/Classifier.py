@@ -72,7 +72,7 @@ class Classifier():
         bad_mean  = np.mean( self.fX[ np.where( plabels == 1 ) ] )
         
         if np.isnan(good_mean) == False and np.isnan(bad_mean) == False:
-            assert good_mean > bad_mean
+            assert good_mean >= bad_mean
 
         lb = func.lb
         ub = func.ub
@@ -98,6 +98,8 @@ class Classifier():
             ax.plot(1, 1, 'ro', markersize=3)
         elif func_name == 'Schwefel':
             ax.plot(420.9687, 420.9687, 'ro', markersize=3)
+        elif func_name == 'Easom':
+            ax.plot(3.1415, 3.1415, 'ro', markersize=3)
         # ax.contour(xv, yv, true_y.reshape(xv.shape), cmap=cm.coolwarm)
         ax.contourf(xv, yv, pred_labels, alpha=0.4)
         

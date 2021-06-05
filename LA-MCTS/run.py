@@ -42,12 +42,18 @@ elif args.func == 'hopper':
 ## Other ##
 elif args.func == 'highway':
     f = Highway()
+elif args.func == 'roundabout':
+    f = Roundabout()
 elif args.func == 'goddard':
     f = Goddard()
 elif args.func == 'maze':
     f = Maze()
 elif args.func == 'minigrid':
     f = MiniGrid()
+elif args.func == 'minigrid2':
+    f = MiniGrid2()
+elif args.func == 'minigridkey':
+    f = MiniGridKey()
 
 ## Pybullet ##
 elif args.func == 'minitaur':

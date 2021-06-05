@@ -6,7 +6,7 @@ import highway_env
 import gym_maze
 from gym_minigrid.wrappers import *
 
-env = gym.make('RacecarBulletEnv-v0')
+env = gym.make('maze-random-10x10-v0')
 
 # env = gym.make('Hopper-v2')
 
